@@ -3,11 +3,22 @@ const cors = require('cors');
 require('dotenv').config();
 
 const pool = require('./config/db');
+const authRoutes = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard');
+
 
 const app = express();
 
-app.use(cors());
+
+
+app.use(cors({
+   origin: 'http://localhost:3000',
+   credentials: true
+}));
 app.use(express.json());
+app.use('/api/auth', authRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+
 
 app.get('/' , async (req, res) =>{
    const result = await pool.query('SELECT NOW()');
