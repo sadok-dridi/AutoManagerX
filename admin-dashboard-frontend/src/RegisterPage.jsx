@@ -1,5 +1,9 @@
 import React , {useState } from 'react';
 import axios from 'axios';
+import {FaLock, FaUser} from "react-icons/fa";
+import './LoginPage.css'
+import { MdEmail } from "react-icons/md";
+
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -19,7 +23,7 @@ const RegisterPage = ({ setToken, setIsRegister }) => {
             setToken(res.data.token);
             setError('');
             setSuccess('Registration successful! You can now login.');
-            setTimeout(() => setIsRegister(false), 2000);
+            setTimeout(() => setIsRegister(false), 1000);
         } catch (err) {
             console.error('Registration error:', err.response || err);
             setError(err.response?.data?.message || 'Registration failed');
@@ -27,21 +31,62 @@ const RegisterPage = ({ setToken, setIsRegister }) => {
         }
     };
     return (
-        <div className="p-4 max-w-md mx-auto">
-            <h1 className="text-xl font-bold mb-4">Register</h1>
-            <form onSubmit={handleRegister} className="space-y-3">
-                <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} className="w-full p-2 border rounded" required />
-                <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="w-full p-2 border rounded" required />
-                <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="w-full p-2 border rounded" required />
-                {error && <p className="text-red-500 text-sm">{error}</p>}
-                {success && <p className="text-green-500 text-sm">{success}</p>}
-                <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Register</button>
+        <div className="wrapper">
+            <form onSubmit={handleRegister}>
+                <h1>Register</h1>
+                <div className="input-box">
+                    <input
+                        type="Text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+
+                    <FaUser className="icon"/>
+                </div>
+                <div className="input-box">
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <MdEmail className="icon"/>
+                </div>
+                <div className="input-box">
+                    <input
+                        type="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <FaLock className="icon"/>
+                </div>
+
+                {error && <p className="error-message">{error}</p>}
+                <button type="submit">Register</button>
+
+                <div className="register-link">
+                    <p>
+                        Already have an account?{' '}
+                        <a
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsRegister();
+                            }}
+                        >
+                            Login
+                        </a>
+                    </p>
+                </div>
             </form>
-            <p className="mt-4 text-center">
-                Already have an account?{' '}
-                <button onClick={() => setIsRegister(false)} className="text-blue-500 underline">Login</button>
-            </p>
+
         </div>
+
     );
 };
 

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from "axios";
 import './LoginPage.css'
 
-import { FaUser ,FaLock} from "react-icons/fa";
+import { FaLock} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+
 
 
 
@@ -38,7 +40,7 @@ const LoginPage = ({ setToken, setIsRegister  }) => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         />
-                    <FaUser className="icon" />
+                    <MdEmail className="icon" />
                 </div>
                 <div className="input-box">
                     <input
@@ -64,7 +66,7 @@ const LoginPage = ({ setToken, setIsRegister  }) => {
                             href="#"
                             onClick={(e) => {
                                 e.preventDefault();
-                                setIsRegister(true);
+                                setIsRegister();
                             }}
                         >
                             Register
